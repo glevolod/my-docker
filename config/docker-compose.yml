@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  database:
+    container_name: database
+    build:
+      context: ./database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    environment:
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/data:/var/lib/mysql
+
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: ./php-fpm
+      args:
+        TIMEZONE: ${TIMEZONE}
+    depends_on:
+      - database
+    environment:
+      - APP_ENV=${APP_ENV}
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
+    volumes:
+      - ../app:/var/www
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    volumes:
+      - ../app:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs:/var/log
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+      - "443:443"
+
+
