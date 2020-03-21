@@ -12,7 +12,9 @@ RUN apt-get -q update && apt-get -qy install netcat \
 
 RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
+ARG XDEBUG_REMOTE_HOST
 COPY conf.d/custom.ini $PHP_INI_DIR/conf.d/
+RUN sed -i "s/__remote_host__/${XDEBUG_REMOTE_HOST}/g" $PHP_INI_DIR/conf.d/custom.ini
 
 COPY --from=composer:1.10.1 /usr/bin/composer /usr/bin/composer
 

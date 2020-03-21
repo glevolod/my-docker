@@ -23,12 +23,15 @@ services:
     container_name: php-fpm
     build:
       context: ./php-fpm
+      args:
+        - XDEBUG_REMOTE_HOST=${XDEBUG_REMOTE_HOST}
     depends_on:
       - database
     environment:
       - TZ=${TIMEZONE}
       - APP_ENV=${APP_ENV}
       - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
       - ../app:/var/www
 
