@@ -36,7 +36,7 @@ services:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
       - ../app:/var/www
-
+      - ./php-fpm/composer-settings:/root/.composer
   nginx:
     container_name: nginx
     build:
