@@ -25,6 +25,8 @@ services:
       context: ./php-fpm
       args:
         - XDEBUG_REMOTE_HOST=${XDEBUG_REMOTE_HOST}
+        - WITH_XDEBUG=${WITH_XDEBUG}
+        - APP_ENV=${APP_ENV}
     depends_on:
       - database
     environment:

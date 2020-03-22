@@ -5,16 +5,29 @@ COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
 # netcat needed for executing nc command by wait-for-it
-RUN apt-get -q update && apt-get -qy install netcat \
+RUN apt-get -q update && apt-get -qy install netcat libzip-dev \
     && docker-php-ext-install pdo_mysql \
-    && pecl install xdebug-2.9.3 \
-    && docker-php-ext-enable xdebug
-
-RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+    && docker-php-ext-install zip
 
 ARG XDEBUG_REMOTE_HOST
-COPY conf.d/custom.ini $PHP_INI_DIR/conf.d/
-RUN sed -i "s/__remote_host__/${XDEBUG_REMOTE_HOST}/g" $PHP_INI_DIR/conf.d/custom.ini
+ARG WITH_XDEBUG
+ARG APP_ENV
+RUN if [ ${APP_ENV} = "dev" ] ; \
+    then \
+        cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; \
+    else \
+        cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" ; \
+    fi ;
+
+RUN if [ ${WITH_XDEBUG} = "true" ] ; \
+    then \
+        pecl install xdebug-2.9.3; \
+        docker-php-ext-enable xdebug; \
+        echo "xdebug.remote_enable=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \
+        echo "xdebug.remote_autostart=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \
+        echo "xdebug.remote_host=${XDEBUG_REMOTE_HOST}" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \
+    fi ;
+COPY conf.d/custom.ini $PHP_INI_DIR/conf.d/99-custom.ini
 
 COPY --from=composer:1.10.1 /usr/bin/composer /usr/bin/composer
 
