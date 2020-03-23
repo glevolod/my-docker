@@ -6,7 +6,7 @@ This config provide ability to run environment for php applications with Nginx, 
 1. create **app** directory in root path of this repo and put your application (Symfony) there
 1. copy **.env.example** into **.env** and change values
 1. edit **/etc/hosts** for resolving host from **HOST** value of **.env** file into **127.0.0.1**
-1. execute `docker-compose up` in console
+1. execute `docker-compose up` in **config** directory in console
 
 ## Explanation
 Configuration tested with Docker 19.03.8, Docker Compose 1.25.4
