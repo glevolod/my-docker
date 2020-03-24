@@ -4,7 +4,7 @@ services:
   database:
     container_name: database
     build:
-      context: ./database
+      context: ./config/database
     command: --default-authentication-plugin=mysql_native_password
     restart: on-failure
     environment:
@@ -16,13 +16,13 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./database/data:/var/lib/mysql
+      - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./config/database/data/:/var/lib/mysql/
 
   php-fpm:
     container_name: php-fpm
     build:
-      context: ./php-fpm
+      context: ./config/php-fpm
       args:
         - XDEBUG_REMOTE_HOST=${XDEBUG_REMOTE_HOST}
         - WITH_XDEBUG=${WITH_XDEBUG}
@@ -35,19 +35,19 @@ services:
       - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
-      - ../app:/var/www
-      - ./php-fpm/composer-settings:/root/.composer
+      - ./app/:/var/www/
+      - ./config/php-fpm/composer-settings/:/root/.composer/
   nginx:
     container_name: nginx
     build:
-      context: ./nginx
+      context: ./config/nginx
       args:
         - HOST=${HOST}
     volumes:
-      - ../app:/var/www
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/conf.d/:/etc/nginx/conf.d
-      - ./logs:/var/log
+      - ./app:/var/www
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./logs/nginx/:/var/log/nginx/
     depends_on:
       - php-fpm
     environment:
