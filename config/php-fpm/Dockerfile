@@ -33,6 +33,6 @@ COPY --from=composer:1.10.1 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-CMD wait-for-it database:3306 -- php-fpm
+CMD wait-for-it db:3306 -- php-fpm
 
 EXPOSE 9000

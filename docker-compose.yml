@@ -1,8 +1,7 @@
 version: '3'
 
 services:
-  database:
-    container_name: database
+  db:
     build:
       context: ./config/database
     command: --default-authentication-plugin=mysql_native_password
@@ -19,8 +18,7 @@ services:
       - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./config/database/data/:/var/lib/mysql/
 
-  php-fpm:
-    container_name: php-fpm
+  php:
     build:
       context: ./config/php-fpm
       args:
@@ -28,17 +26,16 @@ services:
         - WITH_XDEBUG=${WITH_XDEBUG}
         - APP_ENV=${APP_ENV}
     depends_on:
-      - database
+      - db
     environment:
       - TZ=${TIMEZONE}
       - APP_ENV=${APP_ENV}
-      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}?serverVersion=5.7
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
       - ./app/:/var/www/
       - ./config/php-fpm/composer-settings/:/root/.composer/
   nginx:
-    container_name: nginx
     build:
       context: ./config/nginx
       args:
@@ -49,7 +46,7 @@ services:
       - ./config/nginx/conf.d/:/etc/nginx/conf.d/
       - ./logs/nginx/:/var/log/nginx/
     depends_on:
-      - php-fpm
+      - php
     environment:
       - TZ=${TIMEZONE}
     ports:
