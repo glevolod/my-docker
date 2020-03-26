@@ -25,6 +25,7 @@ services:
         - XDEBUG_REMOTE_HOST=${XDEBUG_REMOTE_HOST}
         - WITH_XDEBUG=${WITH_XDEBUG}
         - APP_ENV=${APP_ENV}
+        - LOCAL_USER_ID=${LOCAL_USER_ID}
     depends_on:
       - db
     environment:
@@ -34,7 +35,8 @@ services:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
       - ./app/:/var/www/
-      - ./config/php-fpm/composer-settings/:/root/.composer/
+      - ./config/php-fpm/composer-settings/:/home/proxy_user/.composer/
+    user: ${LOCAL_USER_ID}
   nginx:
     build:
       context: ./config/nginx

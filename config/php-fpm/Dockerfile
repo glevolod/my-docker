@@ -1,7 +1,9 @@
 FROM php:7.4-fpm
 
-COPY wait-for-it.sh /usr/bin/wait-for-it
+ARG LOCAL_USER_ID
+RUN useradd proxy_user -m -u $LOCAL_USER_ID
 
+COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
 # netcat needed for executing nc command by wait-for-it
