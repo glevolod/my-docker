@@ -33,3 +33,6 @@ Usually id will be set in 1000 (as a first user id for login in linux). So this 
 php container (like 'docker exec -it my-docker_php_1 bash') for executing console commands (like 'composer install').
 And so new files created such way in the php container will have the same user:group permissions as you need in your 
 host machine.
+
+#### Database management
+'adminer' image is used for database management. Interface is available on port 8080 on localhost

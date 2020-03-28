@@ -54,5 +54,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DESIGN=nette
+      - ADMINER_PLUGINS=tables-filter tinymce
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
 
 
