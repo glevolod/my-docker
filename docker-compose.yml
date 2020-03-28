@@ -4,7 +4,7 @@ services:
   db:
     build:
       context: ./config/database
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     restart: on-failure
     environment:
       - TZ=${TIMEZONE}
@@ -54,5 +54,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DESIGN=nette
+      - ADMINER_PLUGINS=tables-filter tinymce
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
 
 
