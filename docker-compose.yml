@@ -4,7 +4,7 @@ services:
   db:
     build:
       context: ./config/database
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     restart: on-failure
     environment:
       - TZ=${TIMEZONE}
