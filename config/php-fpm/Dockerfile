@@ -7,9 +7,12 @@ COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
 # netcat needed for executing nc command by wait-for-it
-RUN apt-get -q update && apt-get -qy install netcat libzip-dev \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install zip
+RUN apt-get -q update && apt-get -qy install netcat libzip-dev libicu-dev libonig-dev libcurl4-openssl-dev \
+    && docker-php-ext-install pdo_mysql pdo zip opcache intl mbstring curl exif json calendar fileinfo \
+#    bcmath bz2 ctype dba dom enchant ffi filter ftp gd gettext gmp hash iconv imap ldap mysqli oci8 odbc pcntl pdo_dblib \
+#    pdo_firebird pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline reflection session shmop \
+#    simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlrpc xmlwriter xsl zend_test \
+;
 
 ARG XDEBUG_REMOTE_HOST
 ARG WITH_XDEBUG

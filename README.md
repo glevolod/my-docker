@@ -18,13 +18,14 @@ MySQL data and tables are stored in /config/database/data folder \
 Users and database created when container is built (**DATABASE_**\* variables in **.env** file)
 
 #### Php-fpm
-php-fpm container uses **wait-for-it.sh** script to detect if database is ready for connections \
+php container uses **wait-for-it.sh** script to detect if database is ready for connections \
 php.ini variables can be changed in /config/php-fpm/conf.d/custom.ini \
 If **APP_ENV=dev** in **.env** file, then php.ini-development config is used, php.ini-production instead \
 If **WITH_XDEBUG=true** in **.env** file, then container is built with xdebug-2.9.3 . 
 For configuring xdebug **XDEBUG_REMOTE_HOST** will be set as a network bridge used for docker. \
 For debugging cli in PHPStorm **PHP_IDE_CONFIG=serverName=php-fpm** will be changed in **.env** file.
 Where **'php-fpm'** is a name of server from "Settings > Languages & Frameworks > PHP > Servers" in PHPStorm \
+'symfony' command is available in php container
 
 ##### Improved permissions for php container
 During php container creation user **proxy_user** is added in it with id as you can specify in **LOCAL_USER_ID** 
