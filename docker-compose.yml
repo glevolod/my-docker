@@ -56,7 +56,7 @@ services:
       - "443:443"
   adminer:
     image: adminer
-    restart: always
+    restart: on-failure
     environment:
       - ADMINER_DESIGN=nette
       - ADMINER_PLUGINS=tables-filter tinymce
