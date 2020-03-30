@@ -36,6 +36,7 @@ services:
     volumes:
       - ./app/:/var/www/
       - ./config/php-fpm/composer-settings/:/home/proxy_user/.composer/
+      - ./config/php-fpm/git-settings/.gitconfig:/home/proxy_user/.gitconfig
     user: ${LOCAL_USER_ID}
   nginx:
     build:

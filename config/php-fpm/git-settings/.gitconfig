@@ -1,0 +1,3 @@
+# this file is not tracked by git because of such command as :
+# git update-index --assume-unchanged config/php-fpm/git-settings/.gitconfig
+

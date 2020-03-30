@@ -14,6 +14,10 @@ RUN apt-get -q update && apt-get -qy install netcat libzip-dev libicu-dev liboni
 #    simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlrpc xmlwriter xsl zend_test \
 ;
 
+RUN apt-get -qy install git \
+    && git config --system alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" \
+    && git config --system core.excludesfile ~/.gitignore
+
 ARG XDEBUG_REMOTE_HOST
 ARG WITH_XDEBUG
 ARG APP_ENV
