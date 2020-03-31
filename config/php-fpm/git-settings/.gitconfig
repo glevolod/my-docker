@@ -1,6 +1,0 @@
-# make this file not tracked by git with such command as :
-# git update-index --assume-unchanged config/php-fpm/git-settings/.gitconfig
-# after that, you can store git settings in php container with commands like:
-# git config --global user.name "FIRST_NAME LAST_NAME"
-# git config --global user.email "mail@example.com"
-

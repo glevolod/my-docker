@@ -42,12 +42,10 @@ Port 3306 is also available on localhost so usage such tool as MySQL Workbench i
 #### Git
 Git is installed in php container. \
 File **php-fpm/git-settings/.global_gitignore** is used in volume for default ignoring patterns.
-Alias `git hist` is available for pretty way of seeing git log.
-There is ability to store some git settings during container is stopped. File **php-fpm/git-settings/.gitconfig** 
-is mapped as a volume for **~/.gitconfig** in php container. But this requires some additional settings in current 
-(this) repository:
-1. make this **php-fpm/git-settings/.gitconfig** not tracked by git with such command as :
-1. `git update-index --assume-unchanged config/php-fpm/git-settings/.gitconfig`
-1. after that, you can store git settings in php container with commands like:
-1. `git config --global user.name "FIRST_NAME LAST_NAME"`
-1. `git config --global user.email "mail@example.com"`
+Alias `git hist` is available for pretty way of seeing git log. \
+If you want to make a commits from container, and save some settings during container is stopped, then save settings 
+in *local* file. Like :
+1. `git config --local user.name "FIRST_NAME LAST_NAME"`
+1. `git config --local user.email "mail@example.com"`
+
+If *--local* option is used, then the same settings will be applied when you work not from container, but from your filesystem. 

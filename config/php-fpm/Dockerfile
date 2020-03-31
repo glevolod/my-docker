@@ -16,7 +16,7 @@ RUN apt-get -q update && apt-get -qy install netcat libzip-dev libicu-dev liboni
 
 RUN apt-get -qy install git \
     && git config --system alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" \
-    && git config --system core.excludesfile ~/.global_gitignore
+    && git config --system core.excludesfile /home/proxy_user/.global_gitignore
 
 ARG XDEBUG_REMOTE_HOST
 ARG WITH_XDEBUG
