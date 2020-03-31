@@ -36,4 +36,18 @@ And so new files created such way in the php container will have the same user:g
 host machine.
 
 #### Database management
-'adminer' image is used for database management. Interface is available on port 8080 on localhost
+'adminer' image is used for database management. Interface is available on port 8080 on localhost \
+Port 3306 is also available on localhost so usage such tool as MySQL Workbench is possible
+
+#### Git
+Git is installed in php container. \
+File **php-fpm/git-settings/.global_gitignore** is used in volume for default ignoring patterns.
+Alias `git hist` is available for pretty way of seeing git log.
+There is ability to store some git settings during container is stopped. File **php-fpm/git-settings/.gitconfig** 
+is mapped as a volume for **~/.gitconfig** in php container. But this requires some additional settings in current 
+(this) repository:
+1. make this **php-fpm/git-settings/.gitconfig** not tracked by git with such command as :
+1. `git update-index --assume-unchanged config/php-fpm/git-settings/.gitconfig`
+1. after that, you can store git settings in php container with commands like:
+1. `git config --global user.name "FIRST_NAME LAST_NAME"`
+1. `git config --global user.email "mail@example.com"`
