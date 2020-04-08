@@ -44,6 +44,8 @@ RUN curl https://get.symfony.com/cli/installer -o - | bash \
 
 WORKDIR /var/www
 
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 CMD wait-for-it db:3306 -- php-fpm
 
 EXPOSE 9000
