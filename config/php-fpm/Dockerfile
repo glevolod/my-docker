@@ -1,8 +1,5 @@
 FROM php:7.4-fpm
 
-ARG LOCAL_USER_ID
-RUN useradd proxy_user -m -u $LOCAL_USER_ID
-
 COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
@@ -46,6 +43,13 @@ WORKDIR /var/www
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+
+ARG LOCAL_USER_ID
+RUN useradd proxy_user -m -u $LOCAL_USER_ID
+RUN mkdir /home/proxy_user/.ssh \
+    && ssh-keyscan github.com >> /home/proxy_user/.ssh/known_hosts \
+    && chown -R proxy_user:proxy_user /home/proxy_user/.ssh
+
 CMD wait-for-it db:3306 -- php-fpm
 
 EXPOSE 9000

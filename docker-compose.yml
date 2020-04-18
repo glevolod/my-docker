@@ -37,6 +37,7 @@ services:
       - ./app/:/var/www/
       - ./config/php-fpm/composer-settings/:/home/proxy_user/.composer/
       - ./config/php-fpm/git-settings/.global_gitignore:/home/proxy_user/.global_gitignore
+      - ${SSH_PRIVATE_KEY_PATH}:/home/proxy_user/.ssh/id_rsa
     user: ${LOCAL_USER_ID}
   nginx:
     build:

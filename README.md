@@ -49,3 +49,6 @@ in *local* file. Like :
 1. `git config --local user.email "mail@example.com"`
 
 If *--local* option is used, then the same settings will be applied when you work not from container, but from your filesystem. 
+
+#### SSH
+Specify the path to ssh private key which you want to use in php container in **SSH_PRIVATE_KEY_PATH** variable from .env file
