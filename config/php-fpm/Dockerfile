@@ -37,7 +37,7 @@ COPY conf.d/custom.ini $PHP_INI_DIR/conf.d/99-custom.ini
 
 COPY --from=composer:1.10.1 /usr/bin/composer /usr/bin/composer
 RUN curl https://get.symfony.com/cli/installer -o - | bash \
-    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony && rm -r /root/.symfony
 
 WORKDIR /var/www
 
