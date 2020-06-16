@@ -44,6 +44,8 @@ WORKDIR /var/www
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+ENV HISTFILE /home/proxy_user/stored/.bash_history
+
 ARG LOCAL_USER_ID
 RUN useradd proxy_user -m -u $LOCAL_USER_ID
 RUN mkdir /home/proxy_user/.ssh \
