@@ -5,15 +5,24 @@ RUN chmod +x /usr/bin/wait-for-it
 
 # netcat needed for executing nc command by wait-for-it
 RUN apt-get -q update && apt-get -qy install netcat libzip-dev libicu-dev libonig-dev libcurl4-openssl-dev zip unzip \
-    && docker-php-ext-install pdo_mysql pdo zip opcache intl mbstring curl exif json calendar fileinfo \
+    curl gnupg gnupg2 gnupg1 \
+    nano git \
+    && git config --system alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" \
+    && git config --system core.excludesfile /home/proxy_user/.global_gitignore
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions xdebug-^2.9 pdo_mysql pdo zip opcache intl mbstring curl exif json calendar fileinfo xsl \
 #    bcmath bz2 ctype dba dom enchant ffi filter ftp gd gettext gmp hash iconv imap ldap mysqli oci8 odbc pcntl pdo_dblib \
 #    pdo_firebird pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline reflection session shmop \
 #    simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlrpc xmlwriter xsl zend_test \
 ;
 
-RUN apt-get -qy install git nano \
-    && git config --system alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" \
-    && git config --system core.excludesfile /home/proxy_user/.global_gitignore
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install -y yarn
 
 ARG XDEBUG_REMOTE_HOST
 ARG WITH_XDEBUG
