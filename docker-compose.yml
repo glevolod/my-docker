@@ -34,7 +34,7 @@ services:
       - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}?serverVersion=5.7
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
-      - ./app/:/var/www/
+      - ../:/var/www/
       - ./config/php-fpm/composer-settings/:/home/proxy_user/.composer/
       - ./config/php-fpm/git-settings/.global_gitignore:/home/proxy_user/.global_gitignore
       - ${SSH_PRIVATE_KEY_PATH}:/home/proxy_user/.ssh/id_rsa
@@ -46,7 +46,7 @@ services:
       args:
         - HOST=${HOST}
     volumes:
-      - ./app:/var/www
+      - ../:/var/www/
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./config/nginx/conf.d/:/etc/nginx/conf.d/
       - ./logs/nginx/:/var/log/nginx/
