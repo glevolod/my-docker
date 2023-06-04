@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
@@ -38,7 +38,7 @@ RUN if [ ${APP_ENV} = "dev" ] ; \
 
 RUN if [ ${WITH_XDEBUG} = "true" ] ; \
     then \
-        install-php-extensions xdebug-^3.1; \
+        install-php-extensions xdebug-^3.2; \
         echo "xdebug.mode=develop,debug" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \
         echo "xdebug.start_with_request=1" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \
         echo "xdebug.client_host=${XDEBUG_REMOTE_HOST}" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini; \

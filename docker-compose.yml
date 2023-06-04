@@ -39,6 +39,8 @@ services:
       - ./config/php-fpm/git-settings/.global_gitignore:/home/proxy_user/.global_gitignore
       - ${SSH_PRIVATE_KEY_PATH}:/home/proxy_user/.ssh/id_rsa
       - ./config/php-fpm/stored/:/home/proxy_user/stored/
+#    extra_hosts: # for linux (used in xdebug config)
+#      - "host.docker.internal:host-gateway"
   nginx:
     build:
       context: ./config/nginx
@@ -58,7 +60,7 @@ services:
       - "443:443"
   adminer:
     image: adminer
-    restart: on-failure
+#    restart: on-failure
     environment:
       - ADMINER_DESIGN=nette
       - ADMINER_PLUGINS=tables-filter tinymce
