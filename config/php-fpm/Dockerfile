@@ -3,8 +3,7 @@ FROM php:8.2-fpm
 COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
-# netcat needed for executing nc command by wait-for-it
-RUN apt-get update && apt-get install -y mc netcat libzip-dev libicu-dev libonig-dev libcurl4-openssl-dev zip unzip curl \
+RUN apt-get update && apt-get install -y mc libzip-dev libicu-dev libonig-dev libcurl4-openssl-dev zip unzip curl \
     gnupg gnupg2 gnupg1 nano git \
     && git config --system alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short" \
     && git config --system core.excludesfile /home/proxy_user/.global_gitignore

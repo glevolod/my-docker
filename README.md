@@ -1,5 +1,5 @@
 # docker-compose config stub for nginx+mysql+php-fpm
-This config provide ability to run environment for php applications with Nginx, MySQL 5.7, php-fpm 7.4 in three appropriate containers
+This config provide ability to run environment for php applications with Nginx, MySQL 8, php-fpm 8.2, redis in 4 appropriate containers
 
 ## How to use
 1. clone this repo
@@ -9,9 +9,9 @@ This config provide ability to run environment for php applications with Nginx, 
 1. execute `docker-compose up` in **config** directory in console
 
 ## Explanation
-Configuration tested with Docker 19.03.8, Docker Compose 1.25.4
+Configuration tested on MacOS 13.5.2 with Docker 24.0.6, Docker Compose v2.21.0 
 #### Nginx
-Nginx config is suitable for Symfony 5 but can be adopted for any project (Laravel, Yii, Zend etc.)\
+Nginx config is suitable for Symfony 5/6 but can be adopted for any project (Laravel, Yii, Zend etc.)\
 Nginx logs are stored in logs/nginx folder 
 #### MySQL
 MySQL data and tables are stored in /config/database/data folder \
