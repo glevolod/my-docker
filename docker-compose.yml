@@ -31,7 +31,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
       - APP_ENV=${APP_ENV}
-      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}?serverVersion=5.7
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}?serverVersion=8.1
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
     volumes:
       - ./app/:/var/www/
